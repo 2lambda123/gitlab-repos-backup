@@ -1,3 +1,6 @@
+require 'aws-sdk-s3'
+require 'date'
+
 module Targets
   class S3
     def initialize(compressed_path, repo_name)

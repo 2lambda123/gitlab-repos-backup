@@ -1,15 +1,16 @@
+require 'gitlab'
+
 class App
   def initialize
     validate_env_vars!
+    setup_tmp_dir!
   end
 
   def run
-    setup_tmp_dir!
     projects.auto_paginate do |project|
       normalized_name = project.name.gsub(' ', '-')
       process_repo(project.http_url_to_repo, normalized_name)
     rescue StandardError => _e
-      puts _e.inspect
       notifiers.each do |notifier|
         notifier.send_failed_notification(normalized_name)
       end
