@@ -12,7 +12,7 @@ class App
       process_repo(project.http_url_to_repo, normalized_name)
     rescue StandardError => _e
       notifiers.each do |notifier|
-        notifier.send_failed_notification(normalized_name)
+        notifier.new(normalized_name).send_failed_notification
       end
     end
   end
@@ -35,10 +35,6 @@ class App
     clone_repo!(repo_url, repo_name)
     compressed_path = compressor.new(tmp_path, repo_name).compress
     target.new(compressed_path, repo_name).upload
-  end
-
-  def notifiers
-    []
   end
 
   def compressor
@@ -67,12 +63,29 @@ class App
     Object.const_get("Targets::#{@target}")
   end
 
+  def notifier
+    return if notifiers.empty?
+
+    @notifer ||= begin
+                  notifiers.find do |cls_name|
+                    Object.const_get("Notifiers::#{cls_name}").enabled?
+                  end
+                end
+    return if @notifer.nil?
+
+    Object.const_get("Notifiers::#{@notifer}")
+  end
+
   def compressors
     @compressors ||= Compressors.constants.select { |c| Compressors.const_get(c).is_a? Class }
   end
 
   def targets
     @targets ||= Targets.constants.select { |c| Targets.const_get(c).is_a? Class }
+  end
+
+  def notifiers
+    @notifiers ||= Notifiers.constants.select { |c| Notifiers.const_get(c).is_a? Class }
   end
 
   def clone_repo!(url, name)
