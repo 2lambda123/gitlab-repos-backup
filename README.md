@@ -1,5 +1,23 @@
 # gitlab-repos-backup
 
+This project was originally developed, incubated and maintained at [BlueSentry](https://bluesentry.cloud/). The main goal is to provide the ability to backup Gitlab git repos (efficiently using data compression) for a given gitlab organization to the supported storage backends and send alarms on failures. `gitlab-repos-backup` is a protable docker-based solution that is extendable and can support different storage backends, notification systems and data compression mechanisms.
+
+## Supported storage backends:
+
+Current version is supporting backups to:
+- [Amazon S3](https://aws.amazon.com/s3/)
+
+## Supported compression mechanisms:
+
+Current version is supporting compression using:
+- [tar](https://linux.die.net/man/1/tar)
+
+## Supported notifications systems:
+
+Current version can send failure notifications to:
+- [slack](https://slack.com/)
+
+
 ## Usage
 
 ### Docker
@@ -115,3 +133,7 @@ jobs:
             -e GITLAB_PROJECT_ID=my-gitlab-project \
             ghcr.io/bluesentry/gitlab-repos-backup
 ```
+
+## License
+
+gitlab-repos-backup is released under the [MIT License](https://opensource.org/licenses/MIT).
