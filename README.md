@@ -1,6 +1,6 @@
 # gitlab-repos-backup
 
-This project was originally developed, incubated and maintained at [BlueSentry](https://bluesentry.cloud/). The main goal is to provide the ability to backup Gitlab git repos (efficiently using data compression) for a given gitlab organization to the supported storage backends and send alarms on failures. `gitlab-repos-backup` is a protable docker-based solution that is extendable and can support different storage backends, notification systems and data compression mechanisms.
+This project was originally developed, incubated and maintained at [BlueSentry](https://bluesentry.cloud/). The main goal is to provide the ability to backup Gitlab git repos (efficiently using data compression) for a given gitlab organization to the supported storage backends and send alarms on failures. `gitlab-repos-backup` is a [protable docker-based](https://github.com/bluesentry/gitlab-repos-backup/pkgs/container/gitlab-repos-backup) solution that is extendable and can support different storage backends, notification systems and data compression mechanisms.
 
 ## Supported storage backends:
 
